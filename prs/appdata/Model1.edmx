@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище TestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="spravochnaya">
+          <Key>
+            <PropertyRef Name="Kod_Tovara" />
+          </Key>
+          <Property Name="Kod_Tovara" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nazvaniye_tovara" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Edinica_izmereniya" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="uchetnaya">
+          <Key>
+            <PropertyRef Name="Nomer_postuplenya" />
+          </Key>
+          <Property Name="Nomer_postuplenya" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kod_tovara" Type="int" Nullable="false" />
+          <Property Name="Data" Type="nvarchar" MaxLength="50" />
+          <Property Name="Cena" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kolichestvo_tovara" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_uchetnaya_spravochnaya">
+          <End Role="spravochnaya" Type="Self.spravochnaya" Multiplicity="1" />
+          <End Role="uchetnaya" Type="Self.uchetnaya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spravochnaya">
+              <PropertyRef Name="Kod_Tovara" />
+            </Principal>
+            <Dependent Role="uchetnaya">
+              <PropertyRef Name="Kod_tovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TestModelContainer">
+          <EntitySet Name="spravochnaya" EntityType="Self.spravochnaya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uchetnaya" EntityType="Self.uchetnaya" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_uchetnaya_spravochnaya" Association="Self.FK_uchetnaya_spravochnaya">
+            <End Role="spravochnaya" EntitySet="spravochnaya" />
+            <End Role="uchetnaya" EntitySet="uchetnaya" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="spravochnaya">
+          <Key>
+            <PropertyRef Name="Kod_Tovara" />
+          </Key>
+          <Property Name="Kod_Tovara" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nazvaniye_tovara" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Edinica_izmereniya" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="uchetnaya" Relationship="Self.FK_uchetnaya_spravochnaya" FromRole="spravochnaya" ToRole="uchetnaya" />
+        </EntityType>
+        <EntityType Name="uchetnaya">
+          <Key>
+            <PropertyRef Name="Nomer_postuplenya" />
+          </Key>
+          <Property Name="Nomer_postuplenya" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kod_tovara" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cena" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kolichestvo_tovara" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="spravochnaya" Relationship="Self.FK_uchetnaya_spravochnaya" FromRole="uchetnaya" ToRole="spravochnaya" />
+        </EntityType>
+        <Association Name="FK_uchetnaya_spravochnaya">
+          <End Role="spravochnaya" Type="Self.spravochnaya" Multiplicity="1" />
+          <End Role="uchetnaya" Type="Self.uchetnaya" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spravochnaya">
+              <PropertyRef Name="Kod_Tovara" />
+            </Principal>
+            <Dependent Role="uchetnaya">
+              <PropertyRef Name="Kod_tovara" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="spravochnaya" EntityType="Self.spravochnaya" />
+          <EntitySet Name="uchetnaya" EntityType="Self.uchetnaya" />
+          <AssociationSet Name="FK_uchetnaya_spravochnaya" Association="Self.FK_uchetnaya_spravochnaya">
+            <End Role="spravochnaya" EntitySet="spravochnaya" />
+            <End Role="uchetnaya" EntitySet="uchetnaya" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TestModelContainer" CdmEntityContainer="TestEntities">
+          <EntitySetMapping Name="spravochnaya">
+            <EntityTypeMapping TypeName="TestModel.spravochnaya">
+              <MappingFragment StoreEntitySet="spravochnaya">
+                <ScalarProperty Name="Kod_Tovara" ColumnName="Kod_Tovara" />
+                <ScalarProperty Name="Nazvaniye_tovara" ColumnName="Nazvaniye_tovara" />
+                <ScalarProperty Name="Edinica_izmereniya" ColumnName="Edinica_izmereniya" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uchetnaya">
+            <EntityTypeMapping TypeName="TestModel.uchetnaya">
+              <MappingFragment StoreEntitySet="uchetnaya">
+                <ScalarProperty Name="Nomer_postuplenya" ColumnName="Nomer_postuplenya" />
+                <ScalarProperty Name="Kod_tovara" ColumnName="Kod_tovara" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Cena" ColumnName="Cena" />
+                <ScalarProperty Name="Kolichestvo_tovara" ColumnName="Kolichestvo_tovara" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

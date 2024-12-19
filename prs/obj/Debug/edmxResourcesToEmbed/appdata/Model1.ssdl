@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TestModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="spravochnaya">
+    <Key>
+      <PropertyRef Name="Kod_Tovara" />
+    </Key>
+    <Property Name="Kod_Tovara" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nazvaniye_tovara" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Edinica_izmereniya" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="uchetnaya">
+    <Key>
+      <PropertyRef Name="Nomer_postuplenya" />
+    </Key>
+    <Property Name="Nomer_postuplenya" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kod_tovara" Type="int" Nullable="false" />
+    <Property Name="Data" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cena" Type="nvarchar" MaxLength="50" />
+    <Property Name="Kolichestvo_tovara" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_uchetnaya_spravochnaya">
+    <End Role="spravochnaya" Type="Self.spravochnaya" Multiplicity="1" />
+    <End Role="uchetnaya" Type="Self.uchetnaya" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spravochnaya">
+        <PropertyRef Name="Kod_Tovara" />
+      </Principal>
+      <Dependent Role="uchetnaya">
+        <PropertyRef Name="Kod_tovara" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TestModelContainer">
+    <EntitySet Name="spravochnaya" EntityType="Self.spravochnaya" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="uchetnaya" EntityType="Self.uchetnaya" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_uchetnaya_spravochnaya" Association="Self.FK_uchetnaya_spravochnaya">
+      <End Role="spravochnaya" EntitySet="spravochnaya" />
+      <End Role="uchetnaya" EntitySet="uchetnaya" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

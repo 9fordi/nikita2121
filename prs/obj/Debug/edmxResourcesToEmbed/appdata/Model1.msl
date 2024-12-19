@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище TestModelContainer" CdmEntityContainer="TestEntities">
+    <EntitySetMapping Name="spravochnaya">
+      <EntityTypeMapping TypeName="TestModel.spravochnaya">
+        <MappingFragment StoreEntitySet="spravochnaya">
+          <ScalarProperty Name="Kod_Tovara" ColumnName="Kod_Tovara" />
+          <ScalarProperty Name="Nazvaniye_tovara" ColumnName="Nazvaniye_tovara" />
+          <ScalarProperty Name="Edinica_izmereniya" ColumnName="Edinica_izmereniya" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uchetnaya">
+      <EntityTypeMapping TypeName="TestModel.uchetnaya">
+        <MappingFragment StoreEntitySet="uchetnaya">
+          <ScalarProperty Name="Nomer_postuplenya" ColumnName="Nomer_postuplenya" />
+          <ScalarProperty Name="Kod_tovara" ColumnName="Kod_tovara" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Cena" ColumnName="Cena" />
+          <ScalarProperty Name="Kolichestvo_tovara" ColumnName="Kolichestvo_tovara" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
